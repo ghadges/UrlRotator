@@ -4,8 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>URL Rotator</title>
+    <style>
+        /* Basic styling for the body */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            color: #333;
+        }
+    </style>
 </head>
 <body>
+    <h1>Redirecting...</h1>
+
     <script>
         // Array of URLs to rotate through
         const urls = [
@@ -15,16 +31,40 @@
             'https://instagram.com'
         ];
 
-        // Counter to keep track of the current URL index
-        let currentIndex = 0;
+        // Function to get the current index from local storage or initialize it
+        function getCurrentIndex() {
+            // Get the current index from local storage
+            let currentIndex = localStorage.getItem('currentIndex');
+
+            // If no index is stored, initialize it to 0
+            if (currentIndex === null) {
+                currentIndex = 0;
+            } else {
+                // Convert the current index to a number
+                currentIndex = parseInt(currentIndex);
+            }
+
+            return currentIndex;
+        }
+
+        // Function to save the updated index to local storage
+        function saveCurrentIndex(index) {
+            localStorage.setItem('currentIndex', index);
+        }
 
         // Function to get the next URL in sequence
         function getNextUrl() {
-            // Get the current URL based on the current index
+            // Get the current index
+            let currentIndex = getCurrentIndex();
+            
+            // Get the next URL based on the current index
             const nextUrl = urls[currentIndex];
 
             // Update the index for the next call
-            currentIndex = (currentIndex + 1) % urls.length; // Wrap around to 0 after the last URL
+            const nextIndex = (currentIndex + 1) % urls.length; // Wrap around to 0 after the last URL
+            
+            // Save the updated index back to local storage
+            saveCurrentIndex(nextIndex);
 
             return nextUrl; // Return the next URL
         }
@@ -43,6 +83,3 @@
     </script>
 </body>
 </html>
-
-
-
