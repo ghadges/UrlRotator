@@ -7,30 +7,34 @@
 </head>
 <body>
     <script>
-    const urls = [
-        { url: 'https://google.com', weight: 25 },
-        { url: 'https://yandex.com/images/', weight: 25 },
-        { url: 'https://fb.com', weight: 25 },
-        { url: 'https://instagram.com', weight: 25 }
-    ];
+        // Array of URLs to rotate through
+        const urls = [
+            'https://google.com',
+            'https://yandex.com/images/',
+            'https://fb.com',
+            'https://instagram.com'
+        ];
 
-    function getRandomUrl() {
-        const totalWeight = urls.reduce((sum, item) => sum + item.weight, 0);
-        let random = Math.random() * totalWeight;
-        
-        for (let item of urls) {
-            if (random < item.weight) {
-                return item.url;
-            }
-            random -= item.weight;
+        // Counter to keep track of the current URL index
+        let currentIndex = 0;
+
+        // Function to get the next URL in sequence
+        function getNextUrl() {
+            // Get the current URL
+            const nextUrl = urls[currentIndex];
+
+            // Update the index for the next call
+            currentIndex = (currentIndex + 1) % urls.length; // Wrap around to 0 after the last URL
+
+            return nextUrl; // Return the next URL
         }
-        
-        return urls[urls.length - 1].url; // Fallback to last URL
-    }
 
-    window.onload = function() {
-        window.location.href = getRandomUrl();
-    }
+        // Redirect to the next URL on page load
+        window.onload = function() {
+            window.location.href = getNextUrl();
+        }
     </script>
 </body>
 </html>
+
+
