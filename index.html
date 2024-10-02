@@ -5,23 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>URL Rotator</title>
     <style>
-        /* Basic styling for the body */
+        /* Remove visible content to enhance user experience */
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-        }
-        h1 {
-            color: #333;
+            display: none; /* Hide the body until redirection */
         }
     </style>
 </head>
 <body>
-    <h1>Redirecting...</h1>
-
     <script>
         // Define an array of URLs to rotate through
         const urls = [
@@ -54,17 +44,14 @@
             return nextUrl; // Return the next URL
         }
 
-        // Redirect to the next URL
-        async function redirectToNextUrl() {
+        // Redirect to the next URL immediately
+        function redirectToNextUrl() {
             const urlToRedirect = getNextUrl(); // Get the next URL
             window.location.href = urlToRedirect; // Redirect to the next URL
         }
 
         // Initialize redirection when the window loads
-        window.addEventListener('load', function() {
-            // Delay redirection for 1 second (1000 milliseconds)
-            setTimeout(redirectToNextUrl, 1000);
-        });
+        window.onload = redirectToNextUrl; // Directly call the redirection function
     </script>
 </body>
 </html>
