@@ -20,7 +20,7 @@
 
         // Function to get the next URL in sequence
         function getNextUrl() {
-            // Get the current URL
+            // Get the current URL based on the current index
             const nextUrl = urls[currentIndex];
 
             // Update the index for the next call
@@ -30,11 +30,19 @@
         }
 
         // Redirect to the next URL on page load
+        function redirectToNextUrl() {
+            const urlToRedirect = getNextUrl(); // Get the next URL
+            window.location.href = urlToRedirect; // Redirect to the next URL
+        }
+
+        // Set a delay to allow the page to fully load before redirecting
         window.onload = function() {
-            window.location.href = getNextUrl();
+            // Delay of 1 second (1000 milliseconds) before redirection
+            setTimeout(redirectToNextUrl, 1000);
         }
     </script>
 </body>
 </html>
+
 
 
