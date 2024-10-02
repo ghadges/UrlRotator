@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Rotator</title>
+</head>
+<body>
+    <script>
+    const urls = [
+        { url: 'https://google.com', weight: 25 },
+        { url: 'https://yandex.com/images/', weight: 25 },
+        { url: 'https://fb.com', weight: 25 },
+        { url: 'https://instagram.com', weight: 25 }
+    ];
+
+    function getRandomUrl() {
+        const totalWeight = urls.reduce((sum, item) => sum + item.weight, 0);
+        let random = Math.random() * totalWeight;
+        
+        for (let item of urls) {
+            if (random < item.weight) {
+                return item.url;
+            }
+            random -= item.weight;
+        }
+        
+        return urls[urls.length - 1].url; // Fallback to last URL
+    }
+
+    window.onload = function() {
+        window.location.href = getRandomUrl();
+    }
+    </script>
+</body>
+</html>
