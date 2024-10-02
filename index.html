@@ -23,7 +23,7 @@
     <h1>Redirecting...</h1>
 
     <script>
-        // Array of URLs to rotate through
+        // Define an array of URLs to rotate through
         const urls = [
             'https://google.com',
             'https://yandex.com/images/',
@@ -31,55 +31,40 @@
             'https://instagram.com'
         ];
 
-        // Function to get the current index from local storage or initialize it
+        // Get the current index from local storage or initialize it
         function getCurrentIndex() {
-            // Get the current index from local storage
-            let currentIndex = localStorage.getItem('currentIndex');
-
-            // If no index is stored, initialize it to 0
-            if (currentIndex === null) {
-                currentIndex = 0;
-            } else {
-                // Convert the current index to a number
-                currentIndex = parseInt(currentIndex);
-            }
-
+            const currentIndex = parseInt(localStorage.getItem('currentIndex')) || 0;
             return currentIndex;
         }
 
-        // Function to save the updated index to local storage
-        function saveCurrentIndex(index) {
+        // Update the index in local storage
+        function updateCurrentIndex(index) {
             localStorage.setItem('currentIndex', index);
         }
 
-        // Function to get the next URL in sequence
+        // Get the next URL based on the current index
         function getNextUrl() {
-            // Get the current index
-            let currentIndex = getCurrentIndex();
-            
-            // Get the next URL based on the current index
+            const currentIndex = getCurrentIndex();
             const nextUrl = urls[currentIndex];
 
-            // Update the index for the next call
-            const nextIndex = (currentIndex + 1) % urls.length; // Wrap around to 0 after the last URL
+            // Calculate the next index, wrapping around if necessary
+            const nextIndex = (currentIndex + 1) % urls.length;
+            updateCurrentIndex(nextIndex); // Save the updated index
             
-            // Save the updated index back to local storage
-            saveCurrentIndex(nextIndex);
-
             return nextUrl; // Return the next URL
         }
 
-        // Redirect to the next URL on page load
-        function redirectToNextUrl() {
+        // Redirect to the next URL
+        async function redirectToNextUrl() {
             const urlToRedirect = getNextUrl(); // Get the next URL
             window.location.href = urlToRedirect; // Redirect to the next URL
         }
 
-        // Set a delay to allow the page to fully load before redirecting
-        window.onload = function() {
-            // Delay of 1 second (1000 milliseconds) before redirection
+        // Initialize redirection when the window loads
+        window.addEventListener('load', function() {
+            // Delay redirection for 1 second (1000 milliseconds)
             setTimeout(redirectToNextUrl, 1000);
-        }
+        });
     </script>
 </body>
 </html>
